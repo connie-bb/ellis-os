@@ -431,7 +431,7 @@ local firstIndex = 1  -- scroll
 local lastListLine = screenH - 1
 
 
-local headerX = (screenW - #header) / 2
+local headerX = math.floor((screenW - #header) / 2)
 local function drawHeader()
   local headerY = 1
   setLine(headerX, headerY, header)
