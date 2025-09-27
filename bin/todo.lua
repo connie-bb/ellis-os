@@ -63,6 +63,8 @@ local touchY -- y position of user touch
 local mouseScrollDelta = 0
 local mouseScrolling = false
 
+local footer_lines = 1
+
 -- linewise screen buffer
 local screenBuffer = {}
 
@@ -487,12 +489,11 @@ end
 
 local function detectTouch(itemIndex, subitemIndex)
   subitemIndex = subitemIndex or 0
-  if selectedIndex == itemIndex and selectedSubitem == subitemIndex then
-    toggleSelectedItem()
-  else
-    selectedIndex = itemIndex
-    selectedSubitem = subitemIndex
-  end
+  
+  selectedIndex = itemIndex
+  selectedSubitem = subitemIndex
+  toggleSelectedItem()
+  
   touchY = nil
 end
 
@@ -890,8 +891,8 @@ local function draw()
     if selectedIndex then
       if mouseScrolling then
         if mouseScrollDelta < 0
-            or firstUnshownItem < #todoList
-            or firstUnshownSubitem < #todoList[#todoList].subitems
+            or firstUnshownItem < #todoList + footer_lines
+            or firstUnshownSubitem < #todoList[#todoList].subitems + footer_lines
             or not itemShownInFull or not subitemShownInFull then
           -- end of list is not being shown, scroll downwards freely
           -- always ok to scroll up
